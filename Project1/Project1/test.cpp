@@ -2763,38 +2763,464 @@ void pushfront(ListNode**pplist, int x)
 	node->next = *pplist;
 	*pplist = node;
 }
+///返回倒数第K个节点
+//class Solution {
+//public:
+//	ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+//		if (pListHead == NULL)
+//			return NULL;
+//		ListNode*secnd = pListHead;
+//		while (pListHead->next&&k>1)
+//		{
+//			pListHead = pListHead->next;
+//			--k;
+//		}
+//		if (k>1)
+//			return NULL;
+//		while (pListHead->next)
+//		{
+//			pListHead = pListHead->next;
+//			secnd = secnd->next;
+//		}
+//		return secnd;
+//	}
+//};
+//int main()
+//{
+//	ListNode* list = NULL;
+//	pushfront(&list, 1);
+//	pushfront(&list, 3);
+//	pushfront(&list, 6);
+//
+//
+//	Solution s1;
+//	Node *ret= NULL;
+//	if (ret = s1.FindKthToTail(list, 2))
+//		cout << ret->val << endl;
+//	return 0;
+//}
+////////删除一个排序链表中所有重复的节点
+//class Solution {
+//public:
+//	ListNode* deleteDuplication(ListNode* pHead)
+//	{
+//		if (pHead == NULL)
+//			return NULL;
+//		ListNode*head = new ListNode(0);
+//		ListNode*tail = head;
+//		int value;
+//		ListNode*pcur = pHead;
+//		ListNode*next = NULL;
+//		ListNode*denode = NULL;
+//		while (pcur)
+//		{
+//			next = pcur->next;
+//			if (next&&pcur->val == next->val)
+//			{
+//				value = pcur->val;
+//				while (pcur&&pcur->val == value)
+//				{
+//					denode = pcur;
+//					pcur = pcur->next;
+//					delete denode;
+//				}
+//				if (pcur == NULL)
+//					break;
+//			}
+//			else
+//			{
+//				tail->next = pcur;
+//				tail = tail->next;
+//				pcur = next;
+//			}
+//		}
+//		tail->next = NULL;
+//		denode = head;
+//		head = head->next;
+//		return head;
+//	}
+//};
+//int main()
+//{
+//	ListNode* list = NULL;
+//	pushfront(&list, 8);
+////	pushfront(&list, 8);
+//	//pushfront(&list, 7);
+//	//pushfront(&list, 6);
+//	//pushfront(&list, 6);
+//	//pushfront(&list, 6);
+//	//pushfront(&list, 4);
+//	//pushfront(&list, 3);
+//	//pushfront(&list, 2);
+//	//pushfront(&list, 2);
+//	//pushfront(&list, 1);
+//	//pushfront(&list, 1);
+//
+//
+//
+//
+//
+//
+//	Solution s1;
+//	Node*head = s1.deleteDuplication(list);
+//	return 0;
+//}
+#include<stack>
 class Solution {
 public:
-	ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
-		if (pListHead == NULL)
-			return NULL;
-		ListNode*secnd = pListHead;
-		while (pListHead->next&&k>1)
+	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+		if (l1 == NULL)
+			return l2;
+		if (l2 == NULL)
+			return l1;
+		int carry = 0;
+		stack<ListNode*>left;
+		stack<ListNode*>right;
+		ListNode*head = new ListNode(0);
+		ListNode*tail = head;
+		while (l1)
 		{
-			pListHead = pListHead->next;
-			--k;
+			left.push(l1);
+			l1 = l1->next;
 		}
-		if (k>1)
-			return NULL;
-		while (pListHead->next)
+		while (l2)
 		{
-			pListHead = pListHead->next;
-			secnd = secnd->next;
+			right.push(l2);
+			l2 = l2->next;
 		}
-		return secnd;
+		while (!left.empty() || !right.empty() || carry)
+		{
+			int l = 0, r = 0;
+			if (!left.empty())
+			{
+				l1 = left.top();
+				l = l1->val;
+				left.pop();
+			}
+			if (!right.empty())
+			{
+				l2 = right.top();
+
+				r = l2->val;
+				right.pop();
+			}
+			ListNode* newnode = new ListNode((r + l + carry) % 10);
+			carry = (r + l + carry) / 10;
+			tail->next = newnode;
+			tail = tail->next;
+		}
+		return head->next;
 	}
+
 };
 int main()
 {
 	ListNode* list = NULL;
-	pushfront(&list, 1);
-	pushfront(&list, 3);
-	pushfront(&list, 6);
-
-
-	Solution s1;
-	Node *ret= NULL;
-	if (ret = s1.FindKthToTail(list, 2))
-		cout << ret->val << endl;
+	pushfront(&list, 9);
+	pushfront(&list, 8);
+	//pushfront(&list, 7);
+	//pushfront(&list, 6);
+	ListNode* list1 = NULL;
+	pushfront(&list1, 1);
+/*	pushfront(&list1, 6);
+	pushfront(&list1, 4)*/;
+	Solution s1;//8876  664
+	Node*head = s1.addTwoNumbers(list1,list);
 	return 0;
 }
+#include<iostream>
+#include<stack>
+using namespace std;
+struct TreeNode {
+int val;
+struct TreeNode *left;
+struct TreeNode *right;
+TreeNode(int x) :
+	val(x), left(NULL), right(NULL) {
+	}
+};
+//把二叉树改成双向链表
+//class Solution {
+//public:
+//	TreeNode* Convert(TreeNode* pRootOfTree)
+//	{
+//		stack<TreeNode*> st;
+//		st.push(pRootOfTree);
+//		TreeNode*pcur = NULL;
+//		TreeNode*prev=NULL;
+//		pcur = st.top();
+//		st.pop();
+//		while (!st.empty()||pcur)
+//		{
+//			while (pcur)
+//			{
+//				st.push(pcur);
+//				pcur = pcur->left;
+//			}
+//			pcur = st.top();
+//			st.pop();
+//			if (prev&&)
+//				prev->right = pcur;
+//			pcur->left = prev;
+//			prev = pcur;
+//			pcur = pcur->right;
+//		}
+//		return pRootOfTree;
+//	}
+//};
+////
+////给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
+////
+////例如，给定三角形：
+////
+////[
+////	[2],
+////	[3, 4],
+////	[6, 5, 7],
+////	[4, 1, 8, 3]
+////]
+//////自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。
+//class Solution {
+//public:
+//	int minimumTotal(vector<vector<int>>& triangle) {
+//		
+//		int size = triangle.size();
+//		vector<int> ret=triangle[size-1];
+//		for (int i = size - 1; i >0 ; --i)
+//		{
+//			for (int j = 0; j < triangle[i-1].size(); ++j)
+//			{
+//				ret[j] = ((ret[j] <ret[j + 1] ? ret[j] : ret[j+1])+triangle[i-1][j]);
+//			}
+//		}
+//		return ret[0];
+//	}
+//};
+//int main()
+//{
+//	vector<vector<int>>array;
+//	int a1[] = { 2 };
+//	int a2[] = { 3,4 };
+//	int a3[] = { 6,5,7 };
+//	int a4[] = { 4,1,8,3 };
+//	array.resize(4);
+//	array[0] = vector<int>(a1, a1 + 1);
+//	array[1] = vector<int>(a2, a2 + 2);
+//	array[2] = vector<int>(a3, a3 + 3);
+//	array[3] = vector<int>(a4, a4 + 4);
+//	Solution s1;
+//	s1.minimumTotal(array);
+//}
+
+//#define _CRT_SECURE_NO_WARNINGS 1
+//#include<iostream>
+//#include<stack>
+//#include<queue>
+//#include<assert.h>
+//using namespace std;
+//template<class K, class	V>
+//struct BiTreeNode
+//{
+//	BiTreeNode(K key, V value) :_value(value), _key(key), left(NULL), right(NULL){}
+//	BiTreeNode* left;
+//	BiTreeNode* right;
+//	K _key;
+//	V _value;
+//};
+//template<class K, class V>
+//class  BiSortTree
+//{
+//	typedef BiTreeNode<K, V> Node;
+//	typedef BiTreeNode<K, V> TreeNode;
+//public:
+//	BiSortTree() :_root(NULL)
+//	{
+//	}
+//	BiSortTree(V* array, int size) :_root(NULL)
+//	{
+//		int i = 0;
+//		for (int i = 0; i < size; ++i)
+//		{
+//			Insert(array[i], i);
+//		}
+//	}
+//	int TreeHight()
+//	{
+//		if (_root == NULL)
+//			return 0;
+//		return _TreeHight(_root);
+//	}
+//	int _TreeHight(Node*root)
+//	{
+//		if (root == NULL)
+//			return 0;
+//		int leftsize = _TreeHight(root->left);
+//		int rightsize = _TreeHight(root->right);
+//		return leftsize > rightsize ? leftsize + 1 : rightsize + 1;
+//	}
+//	////利用栈求一个树的高度
+//	int TreeHightbystack()
+//	{
+//		int count = 0;
+//		stack<Node*>save;
+//		Node*pcur = _root;
+//		Node*prev = NULL;
+//		while (pcur || !save.empty())
+//		{
+//			while (pcur)
+//			{
+//				save.push(pcur);
+//				pcur = pcur->left;
+//			}
+//			pcur = save.top();
+//			if (pcur->right == NULL || pcur->right == prev)
+//			{
+//				int size = save.size();
+//				if (count < size)
+//					count = size;
+//				prev = pcur;
+//				pcur = NULL;
+//				save.pop();
+//			}
+//			else
+//				pcur = pcur->right;
+//
+//		}
+//		return count;
+//	}
+//	///////利用一个队列求一个树的高度
+//	int TreeHightbyqueue()
+//	{
+//		if (_root == NULL)
+//			return 0;
+//		queue<Node*>save;
+//		int count = 0;
+//		Node*pcur = NULL;
+//		save.push(_root);
+//		while (!save.empty())
+//		{
+//			int i = 0;
+//			int size = save.size();
+//			while (i++<size)
+//			{
+//				pcur = save.front();
+//				save.pop();
+//				if (pcur->left)
+//					save.push(pcur->left);
+//				if (pcur->right)
+//					save.push(pcur->right);
+//			}
+//			++count;
+//		}
+//		return count;
+//	}
+//	bool Insert(K key, V value)
+//	{
+//		Node* newnode = new Node(key, value);
+//		if (_root == NULL)
+//			_root = newnode;
+//		else
+//		{
+//			Node*pparent = NULL;
+//			Node*pcur = _root;
+//			while (pcur)
+//			{
+//				pparent = pcur;
+//				if (pcur->_key == key)
+//					return false;
+//				else if (pcur->_key > key)
+//					pcur = pcur->left;
+//				else
+//					pcur = pcur->right;
+//			}
+//			if (key < pparent->_key)
+//				pparent->left = newnode;
+//			else
+//				pparent->right = newnode;
+//		}
+//		return true;
+//	}
+//
+//	//转换为双向链表非递归
+//	TreeNode* nreform_Two_list()
+//	{
+//		if (_root == NULL)
+//			return NULL;
+//		stack<TreeNode*> st;
+//		st.push(_root);
+//		TreeNode*pcur = _root;
+//		while (pcur->left)
+//		{
+//			pcur = pcur->left;
+//		}
+//		TreeNode*phead = pcur;
+//
+//		TreeNode*prev = NULL;
+//		pcur = st.top();
+//		st.pop();
+//		while (!st.empty() || pcur)
+//		{
+//			while (pcur)
+//			{
+//				st.push(pcur);
+//				pcur = pcur->left;
+//			}
+//			pcur = st.top();
+//			st.pop();
+//			if (prev)
+//				prev->right = pcur;
+//			pcur->left = prev;
+//			prev = pcur;
+//			pcur = pcur->right;
+//		}
+//		return phead;
+//	}
+//	//转换为双向链表递归
+//	Node* reform_Two_list()
+//	{
+//		Node*prev = NULL;
+//		assert(_root);
+//		Node*phead = _root;
+//		while (phead->left)
+//		{
+//			phead = phead->left;
+//		}
+//		_reform_Two_list(prev, _root);
+//		return phead;
+//	}
+//private:
+//	//转换为双向链表
+//	void _reform_Two_list(Node*&prev, Node*pcur)
+//	{
+//		if (pcur == NULL)
+//			return;
+//		_reform_Two_list(prev, pcur->left);
+//		Node*right = pcur->right;
+//		pcur->left = prev;
+//		if (prev)
+//			prev->right = pcur;
+//		prev = pcur;
+//		_reform_Two_list(prev, right);
+//	}
+//
+//	Node* _root;
+//};
+//int main()
+//{
+//	int arr[] = { 5, 3, 2, 8, 1, 4, 7, 6, 9, 10 ,11};
+//	BiSortTree<int, int>bt(arr, sizeof(arr)/sizeof(arr[0]));
+//	/*BiTreeNode<int, int>*head = bt.nreform_Two_list();
+//	while (head)
+//	{
+//		cout << head->_key << " ";
+//		head = head->right;
+//	}*/
+//
+//	/*   bt.reform_Two_list();*/
+//	cout << bt.TreeHight() << endl;
+//	cout << bt.TreeHightbystack() << endl;
+//	cout << bt.TreeHightbyqueue() << endl;
+//	return 0;
+//}
+
+
