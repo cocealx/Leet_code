@@ -2913,21 +2913,73 @@ public:
 	}
 
 };
-int main()
-{
-	ListNode* list = NULL;
-	pushfront(&list, 9);
-	pushfront(&list, 8);
-	//pushfront(&list, 7);
-	//pushfront(&list, 6);
-	ListNode* list1 = NULL;
-	pushfront(&list1, 1);
-/*	pushfront(&list1, 6);
-	pushfront(&list1, 4)*/;
-	Solution s1;//8876  664
-	Node*head = s1.addTwoNumbers(list1,list);
-	return 0;
-}
+//int main()
+//{
+//	ListNode* list = NULL;
+//	pushfront(&list, 9);
+//	pushfront(&list, 8);
+//	//pushfront(&list, 7);
+//	//pushfront(&list, 6);
+//	ListNode* list1 = NULL;
+//	pushfront(&list1, 1);
+///*	pushfront(&list1, 6);
+//	pushfront(&list1, 4)*/;
+//	Solution s1;//8876  664
+//	Node*head = s1.addTwoNumbers(list1,list);
+//	return 0;
+//}
+//删除倒数第k个节点
+class Solution {
+public:
+	ListNode* removeNthFromEnd(ListNode* head, int n) {
+		if (n == 0 && head == NULL)
+			return head;
+		ListNode*pcur = head;
+		ListNode*first = head;
+		ListNode*second = head;
+		while (n-->0)
+		{
+			first = first->next;
+		}
+		if (first == NULL)
+			return head->next;
+		while (first->next)
+		{
+			first = first->next;
+			second = second->next;
+		}
+		second->next = second->next->next;
+		return head;
+	}
+};
+///往右选择k个节点
+class Solution {
+public:
+	ListNode* rotateRight(ListNode* head, int k) {
+		if (head == NULL || k == 0)
+			return head;
+		int size = 1;
+		ListNode*pcur = head;
+		while (pcur->next)
+		{
+			++size;
+			pcur = pcur->next;
+		}
+		k %= size;
+		if (k == 0)
+			return head;
+		ListNode*first = head;
+		k = size - k - 1;
+		while (k--)
+		{
+			first = first->next;
+		}
+		pcur->next = head;
+		head = first->next;
+		first->next = NULL;
+		return head;
+	}
+};
 #include<iostream>
 #include<stack>
 using namespace std;
