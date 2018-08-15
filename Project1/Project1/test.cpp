@@ -3274,5 +3274,245 @@ TreeNode(int x) :
 //	cout << bt.TreeHightbyqueue() << endl;
 //	return 0;
 //}
+//
+/////输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes, 
+////否则输出No。假设输入的数组的任意两个数字都互不相同。
+//
+////思路：后续遍历最后一个一定是根，所以数组的最后一个元素是根，然后以此为界限划分，小于根的是左边的
+////剩下的一定大于根，不然就不是后续遍历，然后递归处理
+//bool VerifySquenceOfBST(vector<int> sequence) {
+//	if (sequence.empty())
+//		return false;
+//	int len = sequence.size();
+//	vector<int> len_left;
+//	vector<int> len_right;
+//	int i = 0;
+//	for (; i < len - 1; i++){
+//		if (sequence[i] < sequence[len - 1])
+//			len_left.push_back(sequence[i]);
+//		else
+//			break;
+//	}
+//	for (; i < len - 1; i++){
+//		if (sequence[i] > sequence[len - 1]){
+//			len_right.push_back(sequence[i]);
+//		}
+//		else
+//			return false;
+//	}
+//	bool left = true, right = true;
+//	if (!len_left.empty())
+//		left = VerifySquenceOfBST(len_left);
+//	if (!len_right.empty())
+//		right = VerifySquenceOfBST(len_right);
+//	return left && right;
+//
+//}
+//
+//
+//
+/////////判断一个树是不是平衡二叉树
+//class Solution {
+//public:
+//
+//	int Depth(TreeNode*pRoot, bool&flag)
+//	{
+//		if (pRoot == NULL)
+//			return 0;
+//		int leftsize = Depth(pRoot->left, flag);
+//		int rightsize = Depth(pRoot->right, flag);
+//		if (!flag)
+//			return 0;
+//		if (leftsize - rightsize>1 || leftsize - rightsize<-1)
+//			flag = false;
+//		return leftsize>rightsize ? leftsize + 1 : rightsize + 1;
+//	}
+//	bool IsBalanced_Solution(TreeNode* pRoot)
+//	{	bool flag = true;
+//	Depth(pRoot, flag);
+//	return flag;
+//}
+//};
+#include<queue>
+class Solution {
+public:
+	vector<vector<int> > Print(TreeNode* pRoot) {
+		vector<vector<int>>ret;
+		queue<TreeNode* >temp;
+		if (pRoot!=NULL)
+			temp.push(pRoot);
+		int i = 1;
+		int count = 1;
+		while (!temp.empty())
+		{
+			i = count;
+			count = 0;
+			vector<int>one;
+			for (int j = 0; j<i; j++)
+			{
+				TreeNode*  top = temp.front();
+				temp.pop();
+				one.push_back(top->val);
+				if (top->left)
+				{
+					temp.push(top->left);
+					++count;
+				}
+				if (top->right)
+				{
+					temp.push(top->right);
+					++count;
+				}				
+			}
+			ret.push_back(one);
+		}
+		return ret;
+	}
+};
 
 
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+using namespace std;
+//树的节点
+struct TreeNode
+{
+	char element;
+	int childNumbers;//孩子结点的个数
+	struct TreeNode* child[3];//孩子的数组
+	TreeNode(){}
+	TreeNode(char ele, int numbers)
+	{
+		element = ele;
+		childNumbers = numbers;
+		for (int i = 0; i<3; i++)
+			child[i] = NULL;
+	}
+	//重载赋值运算符
+	TreeNode& operator = (const TreeNode& other)
+	{
+		if (this == &other)
+			return *this;
+		else
+		{
+			element = other.element;
+			childNumbers = other.childNumbers;
+			for (int i = 0; i<3; i++)
+				child[i] = other.child[i];
+		}
+	}
+};
+//二叉树的结点
+typedef struct BTreeNode
+{
+	char element;
+	BTreeNode *left;
+	BTreeNode *right;
+	BTreeNode(char ele = 0, BTreeNode *lchild = NULL, BTreeNode *rchild = NULL)
+	{
+		element = ele;
+		left = lchild;
+		right = rchild;
+	}
+}BTreeNode;
+//构建树
+void CreateTree(TreeNode* &root)
+{
+	TreeNode *e = new TreeNode('E', 0);
+	TreeNode *f = new TreeNode('F', 0);
+	TreeNode *b = new TreeNode('B', 2);
+	b->child[0] = e;
+	b->child[1] = f;
+	TreeNode *g = new TreeNode('G', 0);
+	TreeNode *d = new TreeNode('D', 1);
+	d->child[0] = g;
+	TreeNode *c = new TreeNode('C', 0);
+	root = new TreeNode('A', 3);
+	root->child[0] = b;
+	root->child[1] = c;
+	root->child[2] = d;
+}
+//将树转换为二叉树
+BTreeNode* TreeToBinaryTree(TreeNode *treeRoot)
+{
+	if (treeRoot == NULL)
+	{
+		return NULL;
+	}
+	BTreeNode* binaryRoot = new BTreeNode; //二叉树的根
+	binaryRoot->element = treeRoot->element;
+	binaryRoot->left = TreeToBinaryTree(treeRoot->child[0]); //左孩子
+	BTreeNode *brotherChild = binaryRoot->left; //兄弟
+	for (int i = 1; i<treeRoot->childNumbers; i++)
+	{
+		brotherChild->right = TreeToBinaryTree(treeRoot->child[i]);
+		brotherChild = brotherChild->right;
+	}
+	return binaryRoot;
+}
+//二叉树中序输出
+void MiddleOrderPrint(BTreeNode *root)
+{
+	BTreeNode *temp = root;
+	if (temp == NULL)
+		return;
+	else
+	{
+		MiddleOrderPrint(temp->left);
+		cout << root->element << " ";
+		MiddleOrderPrint(temp->right);
+	}
+}
+int main()
+{
+	TreeNode *treeRoot;
+	CreateTree(treeRoot);
+	BTreeNode *binaryRoot = TreeToBinaryTree(treeRoot);
+	MiddleOrderPrint(binaryRoot);
+	cout << endl;
+	return 0;
+}
+
+/////序列化二叉树和反序列化二叉树
+class Codec {
+private:
+	void preOrder(TreeNode* root, ostringstream& out)
+	{
+		if (!root)
+		{
+			out << "# ";
+			return;
+		}
+		out << root->val << " ";
+		preOrder(root->left, out);
+		preOrder(root->right, out);
+	}
+
+	TreeNode* preOrderDser(istringstream& in)
+	{
+		string val;
+		in >> val;
+		if (val == "#")
+			return NULL;
+		int real_val = stoi(val);
+		TreeNode* root = new TreeNode(real_val);
+		root->left = preOrderDser(in);
+		root->right = preOrderDser(in);
+		return root;
+	}
+public:
+
+	// Encodes a tree to a single string.
+	string serialize(TreeNode* root) {
+		ostringstream out;
+		preOrder(root, out);
+		return out.str();
+	}
+
+	// Decodes your encoded data to tree.
+	TreeNode* deserialize(string data) {
+		istringstream iss(data);
+		return preOrderDser(iss);
+	}
+};
