@@ -2929,57 +2929,57 @@ public:
 //	return 0;
 //}
 //删除倒数第k个节点
-class Solution {
-public:
-	ListNode* removeNthFromEnd(ListNode* head, int n) {
-		if (n == 0 && head == NULL)
-			return head;
-		ListNode*pcur = head;
-		ListNode*first = head;
-		ListNode*second = head;
-		while (n-->0)
-		{
-			first = first->next;
-		}
-		if (first == NULL)
-			return head->next;
-		while (first->next)
-		{
-			first = first->next;
-			second = second->next;
-		}
-		second->next = second->next->next;
-		return head;
-	}
-};
+//class Solution {
+//public:
+//	ListNode* removeNthFromEnd(ListNode* head, int n) {
+//		if (n == 0 && head == NULL)
+//			return head;
+//		ListNode*pcur = head;
+//		ListNode*first = head;
+//		ListNode*second = head;
+//		while (n-->0)
+//		{
+//			first = first->next;
+//		}
+//		if (first == NULL)
+//			return head->next;
+//		while (first->next)
+//		{
+//			first = first->next;
+//			second = second->next;
+//		}
+//		second->next = second->next->next;
+//		return head;
+//	}
+//};
 ///往右选择k个节点
-class Solution {
-public:
-	ListNode* rotateRight(ListNode* head, int k) {
-		if (head == NULL || k == 0)
-			return head;
-		int size = 1;
-		ListNode*pcur = head;
-		while (pcur->next)
-		{
-			++size;
-			pcur = pcur->next;
-		}
-		k %= size;
-		if (k == 0)
-			return head;
-		ListNode*first = head;
-		k = size - k - 1;
-		while (k--)
-		{
-			first = first->next;
-		}
-		pcur->next = head;
-		head = first->next;
-		first->next = NULL;
-		return head;
-	}
-};
+//class Solution {
+//public:
+//	ListNode* rotateRight(ListNode* head, int k) {
+//		if (head == NULL || k == 0)
+//			return head;
+//		int size = 1;
+//		ListNode*pcur = head;
+//		while (pcur->next)
+//		{
+//			++size;
+//			pcur = pcur->next;
+//		}
+//		k %= size;
+//		if (k == 0)
+//			return head;
+//		ListNode*first = head;
+//		k = size - k - 1;
+//		while (k--)
+//		{
+//			first = first->next;
+//		}
+//		pcur->next = head;
+//		head = first->next;
+//		first->next = NULL;
+//		return head;
+//	}
+//};
 #include<iostream>
 #include<stack>
 using namespace std;
@@ -3334,41 +3334,41 @@ TreeNode(int x) :
 //}
 //};
 #include<queue>
-class Solution {
-public:
-	vector<vector<int> > Print(TreeNode* pRoot) {
-		vector<vector<int>>ret;
-		queue<TreeNode* >temp;
-		if (pRoot!=NULL)
-			temp.push(pRoot);
-		int i = 1;
-		int count = 1;
-		while (!temp.empty())
-		{
-			i = count;
-			count = 0;
-			vector<int>one;
-			for (int j = 0; j<i; j++)
-			{
-				TreeNode*  top = temp.front();
-				temp.pop();
-				one.push_back(top->val);
-				if (top->left)
-				{
-					temp.push(top->left);
-					++count;
-				}
-				if (top->right)
-				{
-					temp.push(top->right);
-					++count;
-				}				
-			}
-			ret.push_back(one);
-		}
-		return ret;
-	}
-};
+//class Solution {
+//public:
+//	vector<vector<int> > Print(TreeNode* pRoot) {
+//		vector<vector<int>>ret;
+//		queue<TreeNode* >temp;
+//		if (pRoot!=NULL)
+//			temp.push(pRoot);
+//		int i = 1;
+//		int count = 1;
+//		while (!temp.empty())
+//		{
+//			i = count;
+//			count = 0;
+//			vector<int>one;
+//			for (int j = 0; j<i; j++)
+//			{
+//				TreeNode*  top = temp.front();
+//				temp.pop();
+//				one.push_back(top->val);
+//				if (top->left)
+//				{
+//					temp.push(top->left);
+//					++count;
+//				}
+//				if (top->right)
+//				{
+//					temp.push(top->right);
+//					++count;
+//				}				
+//			}
+//			ret.push_back(one);
+//		}
+//		return ret;
+//	}
+//};
 
 //#include <iostream>
 //#include <string>
@@ -3472,45 +3472,101 @@ public:
 //	return 0;
 //}
 
-/////序列化二叉树和反序列化二叉树
-class Codec {
-private:
-	void preOrder(TreeNode* root, ostringstream& out)
-	{
-		if (!root)
-		{
-			out << "# ";
-			return;
-		}
-		out << root->val << " ";
-		preOrder(root->left, out);
-		preOrder(root->right, out);
-	}
+///////序列化二叉树和反序列化二叉树
+//class Codec {
+//private:
+//	void preOrder(TreeNode* root, ostringstream& out)
+//	{
+//		if (!root)
+//		{
+//			out << "# ";
+//			return;
+//		}
+//		out << root->val << " ";
+//		preOrder(root->left, out);
+//		preOrder(root->right, out);
+//	}
+//
+//	TreeNode* preOrderDser(istringstream& in)
+//	{
+//		string val;
+//		in >> val;
+//		if (val == "#")
+//			return NULL;
+//		int real_val = stoi(val);
+//		TreeNode* root = new TreeNode(real_val);
+//		root->left = preOrderDser(in);
+//		root->right = preOrderDser(in);
+//		return root;
+//	}
+//public:
+//
+//	// Encodes a tree to a single string.
+//	string serialize(TreeNode* root) {
+//		ostringstream out;
+//		preOrder(root, out);
+//		return out.str();
+//	}
+//
+//	// Decodes your encoded data to tree.
+//	TreeNode* deserialize(string data) {
+//		istringstream iss(data);
+//		return preOrderDser(iss);
+//	}
+//};
 
-	TreeNode* preOrderDser(istringstream& in)
-	{
-		string val;
-		in >> val;
-		if (val == "#")
-			return NULL;
-		int real_val = stoi(val);
-		TreeNode* root = new TreeNode(real_val);
-		root->left = preOrderDser(in);
-		root->right = preOrderDser(in);
-		return root;
-	}
-public:
+//#include<string>
+//#include<iostream>
+//using namespace std;
+//
+//
+//
+//class Solution {
+//public:
+//	string longestCommonPrefix(vector<string>& strs) {
+//		int len = strs.size();
+//		if (len == 0)
+//			return "";
+//		string str1 = strs[0];
+//		for (int i = 0; i<str1.size(); ++i)
+//		{
+//			for (int j = 1; j<len; j++)
+//			{
+//				if (str1[i] != strs[j][i])
+//					return str1.substr(0, i);
+//			}
+//		}
+//		return str1;
+//	}
+//};
+//int main()
+//{
+//	string s("1234567");
+//	cout << s << endl;
+//	cout << s.substr(0,3) << endl;
+//
+//	return 0;
+//}
 
-	// Encodes a tree to a single string.
-	string serialize(TreeNode* root) {
-		ostringstream out;
-		preOrder(root, out);
-		return out.str();
-	}
-
-	// Decodes your encoded data to tree.
-	TreeNode* deserialize(string data) {
-		istringstream iss(data);
-		return preOrderDser(iss);
-	}
-};
+////////求二叉树的最大路径的和
+int maxPathSum(TreeNode* root) {
+	int max = root->val;
+	maxsum(root, max);
+	return max;
+}
+int maxsum(TreeNode*root, int &retmax)
+{
+	if (root == NULL)
+		return 0;
+	int left = maxsum(root->left, retmax);
+	int right = maxsum(root->right, retmax);
+	int max1 = max(left + root->val, right + root->val);
+	int max2 = max(root->val, left + right + root->val);
+	int ret = max(max1, max2);
+	retmax = max(ret, retmax);
+	ret = max(left, right);
+	if (ret>0)
+		return ret + root->val;
+	else
+		return root->val;
+}
