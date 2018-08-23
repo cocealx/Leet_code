@@ -3548,25 +3548,75 @@ TreeNode(int x) :
 //	return 0;
 //}
 
-////////求二叉树的最大路径的和
-int maxPathSum(TreeNode* root) {
-	int max = root->val;
-	maxsum(root, max);
-	return max;
+//////////求二叉树的最大路径的和
+//int maxPathSum(TreeNode* root) {
+//	int max = root->val;
+//	maxsum(root, max);
+//	return max;
+//}
+//int maxsum(TreeNode*root, int &retmax)
+//{
+//	if (root == NULL)
+//		return 0;
+//	int left = maxsum(root->left, retmax);
+//	int right = maxsum(root->right, retmax);
+//	int max1 = max(left + root->val, right + root->val);
+//	int max2 = max(root->val, left + right + root->val);
+//	int ret = max(max1, max2);
+//	retmax = max(ret, retmax);
+//	ret = max(left, right);
+//	if (ret>0)
+//		return ret + root->val;
+//	else
+//		return root->val;
+//}
+
+#include<string>
+#include<iostream>
+using namespace std;
+class Solution1 {
+public:
+	int numTrees(int n) {
+		if (n == 0 || n == 1)
+			return n;
+		vector<TreeNode*>ret;
+		Creat(1, n, ret);
+		return ret.size();
+	}
+	void Creat(int start, int end, vector<TreeNode*>&ret)
+	{
+		if (start>end)
+		{
+			ret.push_back(NULL);
+			return;
+		}
+		for (int i = start; i <= end; ++i)
+		{
+			TreeNode*node = new TreeNode(i);
+			ret.push_back(node);
+			Creat(start, i - 1, ret);
+			node->left = ret.back();
+			ret.pop_back();
+			Creat(i + 1, end, ret);
+			node->right = ret.back();
+			ret.pop_back();
+		}
+	}
+};
+
+int stringToInteger(string input) {
+	return stoi(input);
 }
-int maxsum(TreeNode*root, int &retmax)
-{
-	if (root == NULL)
-		return 0;
-	int left = maxsum(root->left, retmax);
-	int right = maxsum(root->right, retmax);
-	int max1 = max(left + root->val, right + root->val);
-	int max2 = max(root->val, left + right + root->val);
-	int ret = max(max1, max2);
-	retmax = max(ret, retmax);
-	ret = max(left, right);
-	if (ret>0)
-		return ret + root->val;
-	else
-		return root->val;
+
+int main() {
+	string line;
+	while (getline(cin, line)) {
+		int n = stringToInteger(line);
+
+		int ret = Solution1().numTrees(n);
+
+		string out = to_string(ret);
+		cout << out << endl;
+	}
+	return 0;
 }
