@@ -3620,3 +3620,205 @@ int main() {
 	}
 	return 0;
 }
+
+size_t  findy(size_t x, int k)
+{
+	size_t i = 1;
+	int count = 0;
+	while (1)
+	{
+		if (!(i&x))
+			++count;
+		if (count >= k)
+			break;
+		++i;
+	}
+	return i;
+}
+
+int findy1(size_t x, size_t k){
+	vector<size_t> pos1;
+	size_t ans = 0;
+	for (size_t i = 0; i < 32; i++)
+	{
+		if ((x & 1) == 0)
+		{
+			pos1.push_back(i);
+		}
+		x >>= 1;
+	}
+	ans = 0;
+	size_t ind = 0;
+	while (k)
+	{
+		size_t a = pos1[ind++];
+		size_t b = k & 1;
+		k >>= 1;
+		ans = ans | (b << a);
+	}
+	return ans;
+}
+
+int main()
+{
+
+	size_t t;
+	cin >> t;
+	vector<vector<int>> v(t, vector<int>(2));
+	for (size_t i = 0; i < t; i++){
+		cin >> v[i][0];
+		cin >> v[i][1];
+	}
+	for (size_t i = 0; i < t; ++i)
+	{
+		cout << findy(v[i][0], v[i][1]) << endl;
+		cout << findy1(v[i][0], v[i][1]) << endl;
+	}
+	return 0;
+}
+//void findcount(string&str, int pos, int count, int &max)
+//{
+//	if (pos == str.size())
+//	{
+//		if (count > max)
+//			max = count;
+//		return ;
+//	}
+//	int sum = 0;
+//	for (int i = pos; i < str.size(); ++i)
+//	{
+//		sum += (str[i] - '0');
+//		if (sum % 3 == 0)
+//		{
+//			findcount(str, i + 1, count + 1, max);
+//		}
+//		sum *= 10;
+//	}
+//}
+//int main()
+//{
+//	string str;
+//	cin >> str;
+//	int max = 0;
+//	 findcount(str, 0, 0, max);
+//	 cout << max << endl;
+//	 return 0;
+//}
+//int main()
+//{
+//	vector<int>arr;
+//	int temp;
+//	while (cin>>temp)
+//	{
+//		arr.push_back(temp);
+//	}
+//	vector<int>dp(arr);
+//	dp[0] = arr[0];
+//	for (int i = 1; i < arr.size(); ++i)
+//	{
+//		for (int j = 0; j < i; ++j)
+//		{
+//			if (arr[j] < arr[i])
+//				dp[i] = max(dp[i], dp[j] + arr[i]);
+//		}
+//	}
+//	int max = dp[0];
+//	for (auto i : dp)
+//	{
+//		if (i>max)
+//			max = i;
+//	}
+//	cout << max << endl;
+//	return 0;
+//}
+//void zhuhu(vector<int>&arr, int pos, int end,string temp,set<string>&ret)
+//{
+//	if (pos == end)
+//	{
+//		ret.insert(temp);
+//		return;
+//	}
+//	if (arr[pos] == 0)
+//		zhuhu(arr, pos + 1, end, temp, ret);
+//	temp += (pos + '0');
+//	zhuhu(arr, pos + 1, end, temp, ret);
+//}
+//int main()
+//{
+//	vector<int>arr(10);
+//	for (int i = 0; i < 10; ++i)
+//		cin >> arr[i];
+//	string temp;
+//	set<string>ret;
+//	zhuhu(arr, 0, 10,temp,ret);
+//	for (auto i : ret)
+//		cout << i << endl;
+//	return 0;
+//}
+//vector<int> findcount(vector<int>&arr,int left, int right)
+//{
+//	vector<int>ret;
+//	set<int>count;
+//	for (int i = left; i <= right; ++i)
+//	{
+//		count.insert(arr[i]);
+//		ret.push_back(count.size());
+//	}
+//	return ret;
+//}
+//int main()
+//{
+//	int m, n;
+//	cin >> m >> n;
+//	vector<int>flow(m);
+//	for (int i = 0; i < m; ++i)
+//	{
+//		cin >> flow[i];
+//	}
+//	vector<vector<int>>arr;
+//	for (int i = 0; i < m; i++)
+//		arr.push_back(findcount(flow, i, m - 1));
+//	int count;
+//	cin >> count;
+//	int left, right;
+//	queue<int>ret;
+//	for (int i = 0; i < count; ++i)
+//	{
+//		cin >> left >> right;
+//		cout << arr[left - 1][right - 1] << endl;
+//	}
+//}
+
+//#include<iostream>
+//#include<algorithm>
+//#include<vector>
+//#include<set>
+//using namespace std;
+//int findcount(vector<int>&arr, int left, int right)
+//{
+//	set<int>cou;
+//	for (int i = left; i <= right; ++i)
+//	{
+//		cou.insert(arr[i]);
+//	}
+//	return cou.size();
+//}
+//int main()
+//{
+//	int m, n;
+//	cin >> m >> n;
+//	vector<int>flow(m);
+//	for (int i = 0; i < m; ++i)
+//	{
+//		cin >> flow[i];
+//	}
+//	int count;
+//	cin >> count;
+//	int left, right;
+//	for (int i = 0; i < count; ++i)
+//	{
+//		cin >> left >> right;
+//		cout << findcount(flow, left - 1, right - 1) << endl;;
+//	}
+//
+//}
