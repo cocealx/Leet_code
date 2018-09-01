@@ -3822,3 +3822,122 @@ int main()
 //	}
 //
 //}
+
+#include<iostream>
+#include<algorithm>
+using namespace std;
+void qsort(int *arr, int left, int right)
+{
+	if (left >= right)
+		return;
+	int key = left;
+	int satr = left;
+	int end = right;
+	--right;
+	while (left<right)
+	{
+		while (left < right&&arr[right] >= arr[key])
+		{
+			--right;
+		}
+		while (left<right&&arr[left] < arr[key])
+		{
+			++left;
+		}
+		swap(arr[left], arr[right]);
+	}
+	swap(arr[left], arr[key]);
+	qsort(arr, satr, left - 1);
+	qsort(arr, left + 1, end);
+}
+void mez(int *arr, int left, int mid, int right, int *arr1)
+{
+	int st = mid + 1;
+	int pos = left;
+	while (left <= mid&&st <= right)
+	{
+		if (arr[left] < arr[st])
+		{
+			arr1[pos++] = arr[left++];
+		}
+		else
+		{
+			arr1[pos++] = arr[st++];
+		}
+	}
+	while (left <= mid)
+	{
+		arr1[pos++] = arr[left++];
+	}
+	while (st <= right)
+	{
+		arr1[pos++] = arr[st++];
+	}
+}
+void mer_sort(int*arr, int left, int right, int*ret)
+{
+	if (left == right)
+	{
+		ret[left] = arr[left];
+		return;
+	}
+	int mid = left + ((right - left) >> 1);
+	int *temp = new int[right - left + 1];
+	mer_sort(arr, left, mid, temp);
+	mer_sort(arr, mid + 1, right, temp);
+	mez(temp, left, mid, right, ret);
+}
+void adjust(int *arr, int root, int n)
+{
+	int left = (root << 1) + 1;
+	while (left < n)
+	{
+		if (left + 1< n&&arr[left] < arr[left + 1])
+		{
+			++left;
+		}
+		if (arr[left]>arr[root])
+		{
+			swap(arr[left], arr[root]);
+		}
+		else
+		{
+			break;
+		}
+		root = left;
+		left = (root << 1) + 1;
+	}
+}
+void head_sort(int *arr, int n)
+{
+	for (int i = (n - 1) >> 1; i >= 0; --i)
+	{
+		adjust(arr, i, n);
+	}
+	for (int i = n - 1; i>0; --i)
+	{
+		swap(arr[0], arr[i]);
+		adjust(arr, 0, i);
+	}
+}
+#include<unordered_map>
+#include<list>
+struct data
+{
+	int key;
+	int value;
+	data(int k, int v) :key(k), value(v)
+	{
+
+	}
+};
+int main()
+{
+	int arr[10] = { 1, 6, 3, 6, 8, 5, 9, 5, 7, 5 };
+	qsort(arr, 0, 10);
+	//int arr1[10];
+	//mer_sort(arr, 0, 9, arr1);
+	//	head_sort(arr, 10);
+
+	return 0;
+}
