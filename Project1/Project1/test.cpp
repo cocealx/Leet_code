@@ -3607,19 +3607,19 @@ public:
 int stringToInteger(string input) {
 	return stoi(input);
 }
-
-int main() {
-	string line;
-	while (getline(cin, line)) {
-		int n = stringToInteger(line);
-
-		int ret = Solution1().numTrees(n);
-
-		string out = to_string(ret);
-		cout << out << endl;
-	}
-	return 0;
-}
+//
+//int main() {
+//	string line;
+//	while (getline(cin, line)) {
+//		int n = stringToInteger(line);
+//
+//		int ret = Solution1().numTrees(n);
+//
+//		string out = to_string(ret);
+//		cout << out << endl;
+//	}
+//	return 0;
+//}
 
 size_t  findy(size_t x, int k)
 {
@@ -3659,23 +3659,23 @@ int findy1(size_t x, size_t k){
 	return ans;
 }
 
-int main()
-{
-
-	size_t t;
-	cin >> t;
-	vector<vector<int>> v(t, vector<int>(2));
-	for (size_t i = 0; i < t; i++){
-		cin >> v[i][0];
-		cin >> v[i][1];
-	}
-	for (size_t i = 0; i < t; ++i)
-	{
-		cout << findy(v[i][0], v[i][1]) << endl;
-		cout << findy1(v[i][0], v[i][1]) << endl;
-	}
-	return 0;
-}
+//int main()
+//{
+//
+//	size_t t;
+//	cin >> t;
+//	vector<vector<int>> v(t, vector<int>(2));
+//	for (size_t i = 0; i < t; i++){
+//		cin >> v[i][0];
+//		cin >> v[i][1];
+//	}
+//	for (size_t i = 0; i < t; ++i)
+//	{
+//		cout << findy(v[i][0], v[i][1]) << endl;
+//		cout << findy1(v[i][0], v[i][1]) << endl;
+//	}
+//	return 0;
+//}
 //void findcount(string&str, int pos, int count, int &max)
 //{
 //	if (pos == str.size())
@@ -3826,118 +3826,312 @@ int main()
 #include<iostream>
 #include<algorithm>
 using namespace std;
-void qsort(int *arr, int left, int right)
-{
-	if (left >= right)
-		return;
-	int key = left;
-	int satr = left;
-	int end = right;
-	--right;
-	while (left<right)
-	{
-		while (left < right&&arr[right] >= arr[key])
-		{
-			--right;
-		}
-		while (left<right&&arr[left] < arr[key])
-		{
-			++left;
-		}
-		swap(arr[left], arr[right]);
-	}
-	swap(arr[left], arr[key]);
-	qsort(arr, satr, left - 1);
-	qsort(arr, left + 1, end);
-}
-void mez(int *arr, int left, int mid, int right, int *arr1)
-{
-	int st = mid + 1;
-	int pos = left;
-	while (left <= mid&&st <= right)
-	{
-		if (arr[left] < arr[st])
-		{
-			arr1[pos++] = arr[left++];
-		}
-		else
-		{
-			arr1[pos++] = arr[st++];
-		}
-	}
-	while (left <= mid)
-	{
-		arr1[pos++] = arr[left++];
-	}
-	while (st <= right)
-	{
-		arr1[pos++] = arr[st++];
-	}
-}
-void mer_sort(int*arr, int left, int right, int*ret)
-{
-	if (left == right)
-	{
-		ret[left] = arr[left];
-		return;
-	}
-	int mid = left + ((right - left) >> 1);
-	int *temp = new int[right - left + 1];
-	mer_sort(arr, left, mid, temp);
-	mer_sort(arr, mid + 1, right, temp);
-	mez(temp, left, mid, right, ret);
-}
-void adjust(int *arr, int root, int n)
-{
-	int left = (root << 1) + 1;
-	while (left < n)
-	{
-		if (left + 1< n&&arr[left] < arr[left + 1])
-		{
-			++left;
-		}
-		if (arr[left]>arr[root])
-		{
-			swap(arr[left], arr[root]);
-		}
-		else
-		{
-			break;
-		}
-		root = left;
-		left = (root << 1) + 1;
-	}
-}
-void head_sort(int *arr, int n)
-{
-	for (int i = (n - 1) >> 1; i >= 0; --i)
-	{
-		adjust(arr, i, n);
-	}
-	for (int i = n - 1; i>0; --i)
-	{
-		swap(arr[0], arr[i]);
-		adjust(arr, 0, i);
-	}
-}
-#include<unordered_map>
-#include<list>
-struct data
-{
-	int key;
-	int value;
-	data(int k, int v) :key(k), value(v)
-	{
+//void qsort(int *arr, int left, int right)
+//{
+//	if (left >= right)
+//		return;
+//	int key = left;
+//	int satr = left;
+//	int end = right;
+//	--right;
+//	while (left<right)
+//	{
+//		while (left < right&&arr[right] >= arr[key])
+//		{
+//			--right;
+//		}
+//		while (left<right&&arr[left] < arr[key])
+//		{
+//			++left;
+//		}
+//		swap(arr[left], arr[right]);
+//	}
+//	swap(arr[left], arr[key]);
+//	qsort(arr, satr, left - 1);
+//	qsort(arr, left + 1, end);
+//}
+//void mez(int *arr, int left, int mid, int right, int *arr1)
+//{
+//	int st = mid + 1;
+//	int pos = left;
+//	while (left <= mid&&st <= right)
+//	{
+//		if (arr[left] < arr[st])
+//		{
+//			arr1[pos++] = arr[left++];
+//		}
+//		else
+//		{
+//			arr1[pos++] = arr[st++];
+//		}
+//	}
+//	while (left <= mid)
+//	{
+//		arr1[pos++] = arr[left++];
+//	}
+//	while (st <= right)
+//	{
+//		arr1[pos++] = arr[st++];
+//	}
+//}
+//void mer_sort(int*arr, int left, int right, int*ret)
+//{
+//	if (left == right)
+//	{
+//		ret[left] = arr[left];
+//		return;
+//	}
+//	int mid = left + ((right - left) >> 1);
+//	int *temp = new int[right - left + 1];
+//	mer_sort(arr, left, mid, temp);
+//	mer_sort(arr, mid + 1, right, temp);
+//	mez(temp, left, mid, right, ret);
+//}
+//void adjust(int *arr, int root, int n)
+//{
+//	int left = (root << 1) + 1;
+//	while (left < n)
+//	{
+//		if (left + 1< n&&arr[left] < arr[left + 1])
+//		{
+//			++left;
+//		}
+//		if (arr[left]>arr[root])
+//		{
+//			swap(arr[left], arr[root]);
+//		}
+//		else
+//		{
+//			break;
+//		}
+//		root = left;
+//		left = (root << 1) + 1;
+//	}
+//}
+//void head_sort(int *arr, int n)
+//{
+//	for (int i = (n - 1) >> 1; i >= 0; --i)
+//	{
+//		adjust(arr, i, n);
+//	}
+//	for (int i = n - 1; i>0; --i)
+//	{
+//		swap(arr[0], arr[i]);
+//		adjust(arr, 0, i);
+//	}
+//}
+//#include<unordered_map>
+//#include<list>
+//struct data
+//{
+//	int key;
+//	int value;
+//	data(int k, int v) :key(k), value(v)
+//	{
+//
+//	}
+//};
+//int main()
+//{
+//	int arr[10] = { 1, 6, 3, 6, 8, 5, 9, 5, 7, 5 };
+//	qsort(arr, 0, 10);
+//	//int arr1[10];
+//	//mer_sort(arr, 0, 9, arr1);
+//	//	head_sort(arr, 10);
+//
+//	return 0;
+//}
 
+vector<int> rightSideView(TreeNode* root) {
+	queue<TreeNode*>qu;
+	vector<int>ret;
+	if (!root)
+		return ret;
+	
+	while (!qu.empty())
+	{
+		int size = qu.size();
+		ret.push_back(qu.back()->val);
+		TreeNode*cur = NULL;
+		for (int i = 0; i<size; ++i)
+		{
+			cur = qu.front();
+			qu.pop();
+			if (cur->left)
+				qu.push(cur->left);
+			if (cur->right)
+				qu.push(cur->right);
+		}
 	}
-};
+	return ret;
+}
+void jin(TreeNode*left, TreeNode*right)
+{
+	if (left&&right)
+	{
+		swap(left->left, right->right);
+	}
+}
+void Mirror(TreeNode*root)
+{
+	if (root == NULL)
+		return;
+	swap(root->left, root->right);
+	Mirror(root->left);
+	Mirror(root->right);
+}
 int main()
 {
-	int arr[10] = { 1, 6, 3, 6, 8, 5, 9, 5, 7, 5 };
-	qsort(arr, 0, 10);
-	//int arr1[10];
-	//mer_sort(arr, 0, 9, arr1);
-	//	head_sort(arr, 10);
+	rightSideView(NULL);
+	return 0;
+}
 
+//#include <iostream>
+//#include <cstdio>
+//#include <algorithm>
+//#include <cstring>
+//using namespace std;
+//const int MAXN = 100005;
+//struct Node{
+//	int x;
+//	int h;
+//	int cnt;
+//	int ans;
+//	int Max;
+//}arr[MAXN];
+//int dis[MAXN], n;
+//int vis[MAXN];
+//bool cmp(Node& left, Node& right){
+//	return left.x < right.x;
+//}
+//bool comp(Node& left, Node& right){
+//	return left.cnt < right.cnt;
+//}
+//int main(){
+//
+//	while (scanf("%d", &n) != EOF){
+//		for (int i = 1; i <= n; i++){
+//			scanf("%d%d", &arr[i].x, &arr[i].h);
+//			arr[i].cnt = i;
+//			arr[i].ans = 1;
+//			arr[i].Max = arr[i].x + arr[i].h - 1;
+//		}
+//		sort(arr + 1, arr + 1 + n, cmp);
+//		for (int i = n - 1; i >= 1; i--){
+//			int j = i + 1;
+//			int Max = arr[i].Max;
+//			while (j <= n && arr[j].x <= Max){
+//				arr[i].ans += arr[j].ans;
+//				Max = max(Max, arr[j].Max);
+//				j += arr[j].ans;
+//			}
+//			arr[i].Max = Max;
+//		}
+//		sort(arr + 1, arr + 1 + n, comp);
+//		for (int i = 1; i < n; i++)
+//			printf("%d ", arr[i].ans);
+//		printf("%d\n", arr[n].ans);
+//	}
+//	return 0;
+//}
+//#include<iostream>
+//#include <stdio.h>
+//#include <cstring>
+//using namespace std;
+//class edg
+//{
+//	int x, y, next;
+//	edg(int x1, int y1, int next1) :x(x1), y(y1), next(next1)
+//	{}
+//};
+//bool flag[80501];
+//edg e[80501], g[80501];
+//int ans[80501], lse[80501], lsg[80501], f[80501];
+//int maxG, maxE;
+//int find(int x)
+//{
+//	if (f[x] == -1)
+//		return x;
+//	f[x] = find(f[x]);
+//	return f[x];
+//}
+//void dfs(int x)
+//{
+//	flag[x] = true;
+//	for (int i = lsg[x]; i; i = g[i].next)
+//	if (flag[g[i].y])
+//		ans[i] = find(g[i].y);
+//	for (int i = lse[x]; i; i = e[i].next)
+//	{
+//		dfs(e[i].y);
+//		f[find(e[i].y)] = x;
+//	}
+//}
+//int main()
+//{
+//	memset(f, -1, sizeof(f));
+//	int n, m, root;
+//	scanf("%d", &n);
+//	for (int i = 1; i <= n; i++)
+//	{
+//		int x, y;
+//		scanf("%d%d", &x, &y);
+//		if (y == -1)
+//			root = x;
+//		else
+//		{
+//			e[++maxE] = edg( y, x, lse[y]);
+//			lse[y] = maxE;
+//		}
+//	}
+//	scanf("%d", &m);
+//	for (int i = 1; i <= m; i++)
+//	{
+//		int x, y;
+//		scanf("%d%d", &x, &y);
+//		g[++maxG] = edg(x, y, lsg[x] );
+//		lsg[x] = maxG;
+//		g[++maxG] = edg( y, x, lsg[y]);
+//		lsg[y] = maxG;
+//	}
+//	dfs(root);
+//	for (int i = 1; i <= m; i++)
+//	{
+//		edg now = g[i * 2 - 1];
+//		if (ans[i * 2 - 1] == now.x || ans[i * 2] == now.x)
+//			printf("1\n");
+//		else if(ans[i * 2 - 1] == now.y || ans[i * 2] == now.y)
+//			printf("2\n");
+//		else
+//			printf("0\n");
+//	}
+//	return 0;
+//}
+//#include<vector>
+//#include<string>
+//#include<set>
+#include<math.h>
+#include<iostream>
+using namespace std;
+#define LLONG_MAX     9223372036854775807
+int main()
+{
+	long long n, m;
+	cin >> n >> m;
+	long long min = LLONG_MAX;
+	long long count = 0;
+	if (n >= m)
+		cout << n - m << endl;
+	else
+	{
+		long long i = (m >> 1);
+		for (; i < m; ++i)
+		{
+			count = fabs((double)n - i) + fabs((double)(i * 2 - m));
+			if (count < min)
+				min = count;
+		}
+		cout << min << endl;
+	}
 	return 0;
 }
