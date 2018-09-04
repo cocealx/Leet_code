@@ -2865,54 +2865,54 @@ void pushfront(ListNode**pplist, int x)
 //	Node*head = s1.deleteDuplication(list);
 //	return 0;
 //}
-#include<stack>
-class Solution {
-public:
-	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-		if (l1 == NULL)
-			return l2;
-		if (l2 == NULL)
-			return l1;
-		int carry = 0;
-		stack<ListNode*>left;
-		stack<ListNode*>right;
-		ListNode*head = new ListNode(0);
-		ListNode*tail = head;
-		while (l1)
-		{
-			left.push(l1);
-			l1 = l1->next;
-		}
-		while (l2)
-		{
-			right.push(l2);
-			l2 = l2->next;
-		}
-		while (!left.empty() || !right.empty() || carry)
-		{
-			int l = 0, r = 0;
-			if (!left.empty())
-			{
-				l1 = left.top();
-				l = l1->val;
-				left.pop();
-			}
-			if (!right.empty())
-			{
-				l2 = right.top();
-
-				r = l2->val;
-				right.pop();
-			}
-			ListNode* newnode = new ListNode((r + l + carry) % 10);
-			carry = (r + l + carry) / 10;
-			tail->next = newnode;
-			tail = tail->next;
-		}
-		return head->next;
-	}
-
-};
+//#include<stack>
+//class Solution {
+//public:
+//	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+//		if (l1 == NULL)
+//			return l2;
+//		if (l2 == NULL)
+//			return l1;
+//		int carry = 0;
+//		stack<ListNode*>left;
+//		stack<ListNode*>right;
+//		ListNode*head = new ListNode(0);
+//		ListNode*tail = head;
+//		while (l1)
+//		{
+//			left.push(l1);
+//			l1 = l1->next;
+//		}
+//		while (l2)
+//		{
+//			right.push(l2);
+//			l2 = l2->next;
+//		}
+//		while (!left.empty() || !right.empty() || carry)
+//		{
+//			int l = 0, r = 0;
+//			if (!left.empty())
+//			{
+//				l1 = left.top();
+//				l = l1->val;
+//				left.pop();
+//			}
+//			if (!right.empty())
+//			{
+//				l2 = right.top();
+//
+//				r = l2->val;
+//				right.pop();
+//			}
+//			ListNode* newnode = new ListNode((r + l + carry) % 10);
+//			carry = (r + l + carry) / 10;
+//			tail->next = newnode;
+//			tail = tail->next;
+//		}
+//		return head->next;
+//	}
+//
+//};
 //int main()
 //{
 //	ListNode* list = NULL;
@@ -3980,11 +3980,11 @@ void Mirror(TreeNode*root)
 	Mirror(root->left);
 	Mirror(root->right);
 }
-int main()
-{
-	rightSideView(NULL);
-	return 0;
-}
+//int main()
+//{
+//	rightSideView(NULL);
+//	return 0;
+//}
 
 //#include <iostream>
 //#include <cstdio>
@@ -4113,25 +4113,73 @@ int main()
 #include<math.h>
 #include<iostream>
 using namespace std;
-#define LLONG_MAX     9223372036854775807
+//int main()
+//{
+//	long long n, m;
+//	cin >> n >> m;
+//	long long min = LLONG_MAX;
+//	long long count = 0;
+//	if (n >= m)
+//		cout << n - m << endl;
+//	else
+//	{
+//		long long i = (m >> 1);
+//		for (; i < m; ++i)
+//		{
+//			count = fabs((double)n - i) + fabs((double)(i * 2 - m));
+//			if (count < min)
+//				min = count;
+//		}
+//		cout << min << endl;
+//	}
+//	return 0;
+//}
+
+class Solution {
+public:
+	vector<string> generateParenthesis(int n) {
+		vector<string>ret;
+		if (n <= 0)
+		{
+			ret.push_back(string(""));
+			return ret;
+		}
+		string temp;
+		//加号个数
+		int add = 0;
+		//减号个数
+		int sub = 0;
+		zhuhe(add, sub, n, temp, ret);
+		return ret;
+	}
+
+
+	void zhuhe(int add, int sub, int n, string temp, vector<string>&ret)
+	{
+		if (add < n)
+		{
+			zhuhe(add + 1, sub, n, temp + '(', ret);
+			//右括号大于左括号时可以调用这个
+			if (add - sub > 0)
+			{
+				zhuhe(add, sub + 1, n, temp + ')', ret);
+			}
+		}
+		else
+		{
+			while (sub < n)
+			{
+				temp.push_back(')');
+				++sub;
+			}
+			ret.push_back(temp);
+		}
+
+	}
+};
 int main()
 {
-	long long n, m;
-	cin >> n >> m;
-	long long min = LLONG_MAX;
-	long long count = 0;
-	if (n >= m)
-		cout << n - m << endl;
-	else
-	{
-		long long i = (m >> 1);
-		for (; i < m; ++i)
-		{
-			count = fabs((double)n - i) + fabs((double)(i * 2 - m));
-			if (count < min)
-				min = count;
-		}
-		cout << min << endl;
-	}
+	Solution s1;
+	cout << s1.generateParenthesis(4).size() << endl;
 	return 0;
 }
