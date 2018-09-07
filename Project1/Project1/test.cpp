@@ -4135,51 +4135,208 @@ using namespace std;
 //	return 0;
 //}
 
+//class Solution {
+//public:
+//	vector<string> generateParenthesis(int n) {
+//		vector<string>ret;
+//		if (n <= 0)
+//		{
+//			ret.push_back(string(""));
+//			return ret;
+//		}
+//		string temp;
+//		//加号个数
+//		int add = 0;
+//		//减号个数
+//		int sub = 0;
+//		zhuhe(add, sub, n, temp, ret);
+//		return ret;
+//	}
+//
+//
+//	void zhuhe(int add, int sub, int n, string temp, vector<string>&ret)
+//	{
+//		if (add < n)
+//		{
+//			zhuhe(add + 1, sub, n, temp + '(', ret);
+//			//右括号大于左括号时可以调用这个
+//			if (add - sub > 0)
+//			{
+//				zhuhe(add, sub + 1, n, temp + ')', ret);
+//			}
+//		}
+//		else
+//		{
+//			while (sub < n)
+//			{
+//				temp.push_back(')');
+//				++sub;
+//			}
+//			ret.push_back(temp);
+//		}
+//
+//	}
+//};
+//int main()
+//{
+//	Solution s1;
+//	cout << s1.generateParenthesis(4).size() << endl;
+//	return 0;
+//}
+//priority_queue<int, vector<int>>temp;
+//int jud(vector<int>&arr, int left, int right)
+//{
+//	if (--ret[arr[left]] == 0)
+//	{
+//
+//	}
+//}
+#include<concurrent_priority_queue.h>
+#include<map>
+#include<hash_map>
+
+
+#include<iostream>
+#include<vector>
+
+
+//using namespace std;
+//
+//int tj(vector<int>&arr, int left, int right)
+//{
+//	map<int, int>ret;
+//	for (; left <= right; ++left)
+//	{
+//		++ret[arr[left]];
+//	}
+//	int max = 0;
+//	for (auto i : ret)
+//	{
+//		if (max < i.second)
+//			max = i.second;
+//	}
+//	
+//	return max;
+//}
+//
+//void sol(vector<int>&arr, int k, int t, int&count)
+//{
+//	int len = arr.size();
+//	for (int i = 0; i < len; ++i)
+//	{
+//		if (i + k - 1 < len && tj(arr, i, i + k - 1) >= t)
+//			++count;
+//	}
+//}
+//#include<hash_map>
+//
+//
+//#include<iostream>
+//#include<vector>
+//using namespace std;
+//
+//int tj(vector<int>&arr, int left, int right)
+//{
+//	static map<int, int>ret;
+//    int max = 0;
+//	static bool flag = true;
+//	if (flag)
+//	{
+//		for (; left <= right; ++left)
+//		{
+//			++ret[arr[left]];
+//		}
+//
+//		if (arr[right] != arr[left])
+//		{
+//			--arr[left];
+//			++arr[right];
+//		}
+//		flag = false;
+//	}
+//	else
+//	{
+//		if (arr[left] != right)
+//		{
+//			--ret[arr[left]];
+//			++right;
+//		}
+//	}
+//	for (auto i : ret)
+//	{
+//		if (max < i.second)
+//		{
+//			max = i.second;
+//		}
+//	}
+//	return max;
+//}
+//
+//void sol(vector<int>&arr, int k, int t, int&count)
+//{
+//	int len = arr.size();
+//	for (int i = 0; i < len; ++i)
+//	{
+//		if (i + k - 1 < len && tj(arr, i, i + k - 1) >= t)
+//			++count;
+//	}
+//}
+//int main()
+//{
+//	int n, k, t;
+//	cin >> n >> k >> t;
+//	vector<int>arr(n, 0);
+//	for (int i = 0; i < n; ++i)
+//	{
+//		cin >> arr[i];
+//	}
+//	int count = 0;
+//	sol(arr, k, t,count);
+//	cout << count << endl;
+//	return 0;
+//}
+
 class Solution {
 public:
-	vector<string> generateParenthesis(int n) {
-		vector<string>ret;
-		if (n <= 0)
-		{
-			ret.push_back(string(""));
-			return ret;
-		}
-		string temp;
-		//加号个数
-		int add = 0;
-		//减号个数
-		int sub = 0;
-		zhuhe(add, sub, n, temp, ret);
-		return ret;
-	}
-
-
-	void zhuhe(int add, int sub, int n, string temp, vector<string>&ret)
+	vector<vector<int> > Print(TreeNode* pRoot)
 	{
-		if (add < n)
-		{
-			zhuhe(add + 1, sub, n, temp + '(', ret);
-			//右括号大于左括号时可以调用这个
-			if (add - sub > 0)
-			{
-				zhuhe(add, sub + 1, n, temp + ')', ret);
-			}
-		}
-		else
-		{
-			while (sub < n)
-			{
-				temp.push_back(')');
-				++sub;
-			}
-			ret.push_back(temp);
-		}
+		vector<vector<int> >res;
+		int count = 1;//定义计数器为1，注意判断翻转的条件
 
+		if (pRoot == NULL)//判空
+			return res;
+
+		queue<TreeNode*>q;
+		q.push(pRoot);//压入根节点
+		while (!q.empty())
+		{
+			int n = q.size();
+			vector<int> vec;
+			while (vec.size() < n)
+			{
+				TreeNode* pRoot = q.front();//对头元素为根节点
+				q.pop();
+				vec.push_back(pRoot->val);
+
+				if (pRoot->left)
+				{
+					q.push(pRoot->left);
+				}
+				if (pRoot->right)
+				{
+					q.push(pRoot->right);
+				}
+			}
+		
+			if (count % 2 == 0)
+			{
+				reverse(vec.begin(), vec.end());
+			}
+			res.push_back(vec);
+		}
+		count++;
+		return res;
 	}
+
 };
-int main()
-{
-	Solution s1;
-	cout << s1.generateParenthesis(4).size() << endl;
-	return 0;
-}
+
