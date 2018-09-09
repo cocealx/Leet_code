@@ -4296,47 +4296,257 @@ using namespace std;
 //	return 0;
 //}
 
-class Solution {
-public:
-	vector<vector<int> > Print(TreeNode* pRoot)
-	{
-		vector<vector<int> >res;
-		int count = 1;//定义计数器为1，注意判断翻转的条件
+//class Solution {
+//public:
+//	vector<vector<int> > Print(TreeNode* pRoot)
+//	{
+//		vector<vector<int> >res;
+//		int count = 1;//定义计数器为1，注意判断翻转的条件
+//
+//		if (pRoot == NULL)//判空
+//			return res;
+//
+//		queue<TreeNode*>q;
+//		q.push(pRoot);//压入根节点
+//		while (!q.empty())
+//		{
+//			int n = q.size();
+//			vector<int> vec;
+//			while (vec.size() < n)
+//			{
+//				TreeNode* pRoot = q.front();//对头元素为根节点
+//				q.pop();
+//				vec.push_back(pRoot->val);
+//
+//				if (pRoot->left)
+//				{
+//					q.push(pRoot->left);
+//				}
+//				if (pRoot->right)
+//				{
+//					q.push(pRoot->right);
+//				}
+//			}
+//		
+//			if (count % 2 == 0)
+//			{
+//				reverse(vec.begin(), vec.end());
+//			}
+//			res.push_back(vec);
+//		}
+//		count++;
+//		return res;
+//	}
+//
+//};
 
-		if (pRoot == NULL)//判空
-			return res;
+//#include<iostream>
+//#include<vector>
+//using namespace std;
+//vector<int>  FindContinuousSequence(int sum){
+//	
+//	vector<int> ret;
+//	if (sum <= 2)
+//	{
+//		ret.push_back(sum);
+//		return ret;
+//	}
+//	else{
+//		bool isExist = false;
+//		int a1;
+//		int an;
+//		int n;
+//		int num = sum;
+//
+//		
+//		for (a1 = 1; a1<num / 2 + 1; a1++){
+//			//第二个数
+//			for (an = a1 + 1; an<num; an++){
+//				if (a1 + an>num)
+//					break;
+//				//两数之间数字的个数
+//				n = an - a1 + 1;
+//				//满足条件
+//				if ((a1 + an)*n == 2 * num){
+//					
+//					vector<int>temp ;
+//	
+//					isExist = true;
+//				
+//					for (int i = a1; i <= an; i++){
+//	
+//						temp.push_back(i);
+//					}
+//
+//					
+//					break;
+//				}
+//
+//			}
+//		}
+//		return ret;
+//	}
+//
+//}
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int>ret;
+//	int sum = 0;
+//	for (int i = 1; i <= (n >> 1) + 1; ++i)
+//	{
+//		sum += i;
+//		if (sum == n)
+//		{
+//			ret.push_back(i);
+//			break;
+//		}
+//		else if ()
+//	}
+//}
+//
+//#include<iostream>
+//using namespace std;
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	int count = 0;
+//	count = n / 5;
+//	if (n % 5)
+//	{
+//		++count;
+//	}
+//	cout << count << endl;
+//
+//}
+//#include<vector>
+//#include<iostream>
+//using namespace std;
+//long long ch[1001];
+//long long n, m;
+//vector<long> r;
+//void add(long long x, long long v)
+//{
+//	while (x<=n&&v)
+//	{
+//		if (ch[x] < r[x])
+//		{
+//			if (r[x] - ch[x] >= v)
+//			{
+//				ch[x] += v;
+//				v = 0;
+//			}
+//			else
+//			{
+//				v -= (r[x] - ch[x]);
+//				ch[x] = r[x];
+//				++x;
+//			}
+//		}
+//		else
+//			++x;
+//	}
+//}
+//int main()
+//{
+//	
+//	cin >> n >> m;
+//	r.resize(n+1);
+//	for (int i = 1; i <= n; ++i)
+//	{
+//		cin >> r[i];
+//	}
+//	int flag = 0;
+//	long long x, v, k;
+//	for (int i = 0; i < m; ++i)
+//	{
+//		cin >> flag;
+//		if (flag == 2)
+//		{
+//			cin >> x >> v;
+//			if (0>x&&x<=n)
+//			 add(x, v);
+//		}
+//		else
+//		{
+//			cin >> k;
+//			if (0>k&&k<=n)
+//			 cout << ch[k] << endl;
+//		}
+//	}
+//	return 0;
+//}
+//#include<vector>
+//#include<iostream>
+//using namespace std;
+//int main()
+//{
+//	int count;
+//	cin >> count;
+//	long long  m, n;
+//	for (int i = 0; i < count; i++)
+//	{
+//		cin >> m >> n;
+//		if (m == 1 && n == 1)
+//			cout << 1 << endl;
+//		else if (m == 1 || n == 1)
+//		{
+//			cout << (m>1 ? m - 2 : n - 2) << endl;
+//		}
+//		else
+//		{
+//			cout << 0 << endl;
+//		}
+//	}
+//}
+#include<iostream>
+#include<vector>
+using namespace std;
 
-		queue<TreeNode*>q;
-		q.push(pRoot);//压入根节点
-		while (!q.empty())
-		{
-			int n = q.size();
-			vector<int> vec;
-			while (vec.size() < n)
-			{
-				TreeNode* pRoot = q.front();//对头元素为根节点
-				q.pop();
-				vec.push_back(pRoot->val);
 
-				if (pRoot->left)
-				{
-					q.push(pRoot->left);
-				}
-				if (pRoot->right)
-				{
-					q.push(pRoot->right);
-				}
-			}
-		
-			if (count % 2 == 0)
-			{
-				reverse(vec.begin(), vec.end());
-			}
-			res.push_back(vec);
-		}
-		count++;
-		return res;
-	}
-
+#include<iostream>
+#include<vector>
+using namespace std;
+struct MyStruct
+{
+	long long a;
+	long long b;
+	long long c;
 };
-
+int findc(vector<MyStruct>& v, int size)
+{
+	int count = 0;
+	for (int i = 0; i < size; ++i)
+	{
+		for (int j = 0; j < size; ++j)
+		{
+			if (v[i].a < v[j].a&&v[i].b < v[j].b&&v[i].c < v[j].c)
+			{
+				count++;
+				break;
+			}
+		}
+	}
+	return count;
+}
+int main()
+{
+	int size;
+	vector<MyStruct> arr;
+	cin >> size;
+	int a, b, c;
+	while (cin >> a >> b >> c)
+	{
+		MyStruct tmp;
+		tmp.a = a;
+		tmp.b = b;
+		tmp.c = c;
+		arr.push_back(tmp);
+	}
+	int count = findc(arr, size);
+	cout << count << endl;
+	return 0;
+}
