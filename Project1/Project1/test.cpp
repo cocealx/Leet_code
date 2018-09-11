@@ -4502,51 +4502,127 @@ using namespace std;
 //		}
 //	}
 //}
-#include<iostream>
-#include<vector>
-using namespace std;
+//#include<iostream>
+//#include<vector>
+//using namespace std;
+//
+//
+//#include<iostream>
+//#include<vector>
+//#include<string>
+//using namespace std;
+//int arr[256];
+//string townName(int size, vector<string>people)
+//{
+//	
+//	for (int i = 0; i < size; ++i)
+//	{
+//		for (auto j : people[i])
+//		{
+//			++arr[(unsigned char)j];
+//		}
+//	}
+//	string temp;
+//	for (auto i : people[0])
+//	{
+//		if (arr[(unsigned char)i] == size)
+//			temp += i;
+//		else
+//			break;
+//	}
+//	return temp;
+//}
+//int main()
+//{
+//	townName(0, vector<string>());
+//	return 0;
+//}
+//struct MyStruct
+//{
+//	long long a;
+//	long long b;
+//	long long c;
+//};
+//int findc(vector<MyStruct>& v, int size)
+//{
+//	int count = 0;
+//	for (int i = 0; i < size; ++i)
+//	{
+//		for (int j = 0; j < size; ++j)
+//		{
+//			if (v[i].a < v[j].a&&v[i].b < v[j].b&&v[i].c < v[j].c)
+//			{
+//				count++;
+//				break;
+//			}
+//		}
+//	}
+//	return count;
+//}
+//int main()
+//{
+//	int size;
+//	vector<MyStruct> arr;
+//	cin >> size;
+//	int a, b, c;
+//	while (cin >> a >> b >> c)
+//	{
+//		MyStruct tmp;
+//		tmp.a = a;
+//		tmp.b = b;
+//		tmp.c = c;
+//		arr.push_back(tmp);
+//	}
+//	int count = findc(arr, size);
+//	cout << count << endl;
+//	return 0;
+//}
 
 
+
 #include<iostream>
 #include<vector>
+#include<algorithm>
 using namespace std;
-struct MyStruct
+
+void dfs(int &n, vector<vector<int>> &res, vector<int> &tmp, int m, int index)
 {
-	long long a;
-	long long b;
-	long long c;
-};
-int findc(vector<MyStruct>& v, int size)
-{
-	int count = 0;
-	for (int i = 0; i < size; ++i)
+	if (m == 0)
+		res.push_back(tmp);
+	else if (m>0)
 	{
-		for (int j = 0; j < size; ++j)
+		for (int i = index; i <= n; i++)
 		{
-			if (v[i].a < v[j].a&&v[i].b < v[j].b&&v[i].c < v[j].c)
-			{
-				count++;
+			if (m - i < 0)
 				break;
-			}
+			tmp.push_back(i);
+			dfs(n, res, tmp, m - i, i + 1);
+			tmp.pop_back();
 		}
 	}
-	return count;
+}
+vector<vector<int>> find(int n, int m)
+{
+	vector<vector<int>> res;
+	vector<int> tmp;
+	if (n >= m)
+		n = m;
+	dfs(n, res, tmp, m, 1);
+	return res;
 }
 int main()
 {
-	int size;
-	vector<MyStruct> arr;
-	cin >> size;
-	int a, b, c;
-	while (cin >> a >> b >> c)
+	int n, m;
+
+	while (cin >> n >> m)
 	{
-		MyStruct tmp;
-		tmp.a = a;
-		tmp.b = b;
-		tmp.c = c;
-		arr.push_back(tmp);
+		vector<vector<int>> res = find(n, m);
+		for (int i = 0; i<res.size(); i++)
+		{
+			for (int j = 0; j<res[i].size(); j++)
+				cout << res[i][j] << " ";
+			cout << endl;
+		}
 	}
-	int count = findc(arr, size);
-	cout << count << endl;
 	return 0;
 }
